@@ -6,8 +6,6 @@ import cors from "cors";
 import hpp from "hpp";
 import path from "path";
 import rateLimit from "express-rate-limit";
-import swaggerUi from 'swagger-ui-express';
-import * as swaggerDocument from '../documentation/openapi.json';
 import morgan from "morgan";
 import mongoSanitize from "express-mongo-sanitize";
 import dotenv from "dotenv";
@@ -26,8 +24,6 @@ const corsOption = {
   exposedHeaders: ["x-auth-token"],
 };
 app.use(cors(corsOption));
-//use swagger-doc
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
