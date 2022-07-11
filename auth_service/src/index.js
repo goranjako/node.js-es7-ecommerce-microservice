@@ -14,7 +14,6 @@ app.set('port', port);
 const server = http.createServer(app);
 
 const start = () => {
-
 	try {
 	  server.listen(port, () => {
 		console.log(`Api up and running at: http://localhost:`+ port);
