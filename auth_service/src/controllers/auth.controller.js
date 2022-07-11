@@ -17,7 +17,6 @@ class Auth {
           password: req.body.password,
         };
         const user = await authService.register(newUser);
-
         const token = jwt.sign(user.toJSON(), process.env.SECRET_TOKEN, {
           expiresIn: "1h",
         });
@@ -40,7 +39,6 @@ class Auth {
       },
       (err, user) => {
         if (err) throw err;
-
         if (!user) {
           res.status(401).send({
             success: false,
