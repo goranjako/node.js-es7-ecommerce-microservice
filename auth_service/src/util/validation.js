@@ -39,7 +39,6 @@ const validateLoginBody = () => {
       .withMessage("password must be in between 8 to 12 characters long"),
   ];
 };
-
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
@@ -52,7 +51,6 @@ const validate = (req, res, next) => {
     errors: extractedErrors,
   });
 };
-
 module.exports = {
   validateRegistrationBody,
   validateLoginBody,
