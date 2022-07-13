@@ -29,8 +29,8 @@ const validateOrderBody = () => {
     [
       check("user", "User field is required").notEmpty(),
       check("products", "Prosduct field is required").notEmpty(),
-      check("totalPrice", "Please enter a Totalprice").notEmpty(),
-      check("quantity", "Quantity field is required").notEmpty(),
+      check("totalPrice", "Please enter a Totalprice").notEmpty().isNumeric(),
+      check("quantity", "Quantity field is required").notEmpty().isNumeric(),
     ],
   ];
 };

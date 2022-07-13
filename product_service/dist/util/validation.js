@@ -10,11 +10,7 @@ const validateProductBody = () => {
 };
 
 const validateOrderBody = () => {
-  return [[(0, _expressValidator.check)('owner', "Owner is required! from Middleware").notEmpty().isLength({
-    min: 5,
-    max: 10
-  }), // check username property and makes sures its not empty
-  (0, _expressValidator.check)('product', "Prosduct use a valid email!!!! from Middleware").notEmpty(), (0, _expressValidator.check)("totalPrice", "Please enter a Totalprice").notEmpty(), (0, _expressValidator.check)("quantity", "Quantity").notEmpty()]];
+  return [[(0, _expressValidator.check)("user", "User field is required").notEmpty(), (0, _expressValidator.check)("products", "Prosduct field is required").notEmpty(), (0, _expressValidator.check)("totalPrice", "Please enter a Totalprice").notEmpty().isNumeric(), (0, _expressValidator.check)("quantity", "Quantity field is required").notEmpty().isNumeric()]];
 };
 
 const validate = (req, res, next) => {

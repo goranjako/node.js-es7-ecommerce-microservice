@@ -14,8 +14,8 @@ class OrderController {
   async create(req, res) {
     try {
       const data = {
-        owner: req.body.owner,
-        product: req.body.product,
+        user: req.body.user,
+        products: req.body.products,
         quantity: req.body.quantity,
         totalPrice: req.body.totalPrice
       };
@@ -25,9 +25,9 @@ class OrderController {
         msg: "Order submitted"
       });
       /* await channel.consume('Product', data => {
-         order = JSON.parse(data.content);
-       });
-       res.json(order); */
+        order = JSON.parse(data.content);
+      });
+      res.json(order); */
     } catch (error) {
       res.status(422).json(error.message);
     }

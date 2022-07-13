@@ -15,8 +15,6 @@ var _order = _interopRequireDefault(require("./controllers/order.controller"));
 
 var _auth = _interopRequireDefault(require("./util/auth"));
 
-const createValidation = require('./util/joj');
-
 const {
   validateProductBody,
   validateOrderBody,
