@@ -1,53 +1,39 @@
-const {
-  body,
-  validationResult,
-  buildCheckFunction,
-} = require("express-validator");
-
+import { check, validationResult } from "express-validator";
 
 const validateProductBody = () => {
   return [
-    body("code")
+    check("code")
       .trim()
-      .exists()
+      .notEmpty()
+      .isNumeric()
       .withMessage("Code field is required"),
-    body("name")
-      .exists()
-      .withMessage("Name field is required"),
-    body("description")
-      .exists()
+    check("name").notEmpty().withMessage("Name field is required"),
+    check("description")
+      .notEmpty()
       .withMessage("Description field is required")
       .isLength({ min: 10, max: 50 })
       .withMessage("Description must be in between 10 to 50 characters long"),
-    body("price")
-      .exists()
+    check("price")
+      .notEmpty()
+      .isNumeric()
       .withMessage("Price field is required"),
-    body("quantity")
-      .exists()
+    check("quantity")
+      .notEmpty()
+      .isNumeric()
       .withMessage("Quantity field is required"),
   ];
 };
 
 const validateOrderBody = () => {
   return [
-    body("owner")
-      .trim()
-      .exists()
-      .withMessage("Owner field is required"),
-    body("product")
-      .exists()
-      .withMessage("Products field is required"),
-    body("quantity")
-      .exists()
-      .withMessage("Quantity field is required"),
-    body("totalPrice")
-      .exists()
-      .withMessage("TotalPrice field is required")
- 
+    [
+      check("user", "User field is required").notEmpty(),
+      check("products", "Prosduct field is required").notEmpty(),
+      check("totalPrice", "Please enter a Totalprice").notEmpty(),
+      check("quantity", "Quantity field is required").notEmpty(),
+    ],
   ];
 };
-
-
 
 const validate = (req, res, next) => {
   const errors = validationResult(req);

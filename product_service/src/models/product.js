@@ -29,10 +29,6 @@ const ProductSchema = new Schema(
       type: Number,
       default: 0,
     },
-    isfreeshipping: {
-      type: Boolean,
-      default: false,
-    },
     createdAt: {
         type: Date,
         default: Date.now

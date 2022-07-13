@@ -19,8 +19,8 @@ class ProductController {
         description:req.body.description,
         price:req.body.price,
         currency:req.body.currency,
-        quantity:req.body.quantity,
-        isfreeshipping:req.body.isfreeshipping
+        quantity:req.body.quantity
+      
       };
       const obj = await productService.addProduct(product);
       return res
@@ -53,8 +53,8 @@ class ProductController {
       description: req.body.description,
       price: req.body.price,
       currency: req.body.currency,
-      quantity: req.body.quantity,
-      isfreeshipping: req.body.isfreeshipping,
+      quantity: req.body.quantity
+     
     };
     const id = req.params.id;
 
