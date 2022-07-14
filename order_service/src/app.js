@@ -12,7 +12,7 @@ import dotenv from "dotenv";
 import { notFound, errorHandler } from "./util/errorHandler";
 import setRoutes from "./routes";
 import { connectDB } from "./config/db";
-
+import RabbitMQ from "./services/order.rabbitmq";
 const app = express();
 dotenv.config();
 connectDB();
@@ -44,6 +44,7 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 // routes setup
+RabbitMQ.Conect();
 setRoutes(app);
 
 // Catch all route
