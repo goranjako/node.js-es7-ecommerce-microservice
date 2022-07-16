@@ -1,4 +1,5 @@
 import amqp from "amqplib";
+import { json } from "body-parser";
 let channel;
 
 class RabbitMQ {
@@ -23,14 +24,13 @@ class RabbitMQ {
     }
   }
 
-  async Consume(kanal, data) {
+  async Consume(kanal) {
     try {
       channel.consume(kanal, (data) => {
         const userData = JSON.parse(Buffer.from(data.content));
         channel.ack(data);
         console.log("Data konzum: ", userData);
-        Create("Product", ...userData);
-        return userData;
+        return  userData;
       });
     } catch (error) {
         console.log("Error in Connecting RabbitMQ!", error);

@@ -1,5 +1,11 @@
-//import Order from "../models/order";
+"use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+//import Order from "../models/order";
 class OrderService {
   static async getAll() {
     try {
@@ -29,7 +35,9 @@ class OrderService {
 
   static async update(id, data) {
     try {
-      const order = await Order.findById({ _id: id }).exec();
+      const order = await Order.findById({
+        _id: id
+      }).exec();
       order.set(data);
       const result = await order.save();
       return result;
@@ -45,6 +53,8 @@ class OrderService {
       throw error;
     }
   }
+
 }
 
-export default  OrderService;
+var _default = OrderService;
+exports.default = _default;

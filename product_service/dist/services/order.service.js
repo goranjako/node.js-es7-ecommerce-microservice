@@ -9,6 +9,8 @@ exports.default = void 0;
 
 var _amqplib = _interopRequireDefault(require("amqplib"));
 
+var _bodyParser = require("body-parser");
+
 let channel;
 
 class RabbitMQ {
@@ -35,13 +37,12 @@ class RabbitMQ {
     }
   }
 
-  async Consume(kanal, data) {
+  async Consume(kanal) {
     try {
       channel.consume(kanal, data => {
         const userData = JSON.parse(Buffer.from(data.content));
         channel.ack(data);
         console.log("Data konzum: ", userData);
-        Create("Product", ...userData);
         return userData;
       });
     } catch (error) {

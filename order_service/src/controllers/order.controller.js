@@ -10,23 +10,6 @@ class OrderController {
       return res.status(400).json(err.message);
     }
   }
-  // Insert
-  async create(req, res, next) {
-    try {
-      const order = {
-        userId:req.body.userId,
-        productId:req.body.productId,
-        quantity:req.body.quantity,
-        totalPrice:req.body.totalPrice
-      };
-      const obj = await OrderService.addOrder(order);
-      return res
-        .status(200)
-        .json({ success: true, message: " Order is Created successfully." });
-    } catch (err) {
-      res.status(422).json(err.message);
-    }
-  }
 
   // Get by id
   async get(req, res) {
