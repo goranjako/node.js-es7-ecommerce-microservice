@@ -3,8 +3,6 @@ import Order from "../models/order.model";
 let channel;
 
 class RabbitMQ {
-
-
   async Create(kanal, data) {
     try {
       await channel.sendToQueue(kanal, Buffer.from(JSON.stringify({ data })));
@@ -13,7 +11,6 @@ class RabbitMQ {
     }
   }
 
-  
   async Conect() {
     try {
       const amqpServer = "amqp://localhost:5672";
@@ -29,23 +26,22 @@ class RabbitMQ {
   }
   async Consum(ch) {
     try {
-      channel.consume(ch, (data) => {
+      channel.consume(ch, async (data) => {
         const userData = JSON.parse(Buffer.from(data.content));
         channel.ack(data);
-        console.log("Data konzum: ", userData);
         const order = new Order({
-          user: userData.user,
-          products: userData.products,
-          totalPrice: userData.totalPrice,
-          quantity: userData.quantity
-      })
-      const  obj =  Order(order).save();
-        
-        // Create("Product", userData);
-        return userData;
+          user: userData.data.user,
+          products: userData.data.products,
+          totalPrice: userData.data.totalPrice,
+          quantity: userData.data.quantity,
+        });
+        if (!order) {
+          return next(new ErrorHandler("Order not found with this Id", 404));
+        }
+        const obj = await order.save();
       });
     } catch (error) {
-        console.log("Error in Connecting RabbitMQ!", error);
+      console.log("Error in Connecting RabbitMQ!", error);
     }
   }
 }

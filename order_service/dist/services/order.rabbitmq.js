@@ -40,19 +40,23 @@ class RabbitMQ {
 
   async Consum(ch) {
     try {
-      channel.consume(ch, data => {
+      channel.consume(ch, async data => {
         const userData = JSON.parse(Buffer.from(data.content));
         channel.ack(data);
         console.log("Data konzum: ", userData);
         const order = new _order.default({
-          user: userData.user,
-          products: userData.products,
-          totalPrice: userData.totalPrice,
-          quantity: userData.quantity
+          user: userData.data.user,
+          products: userData.data.products,
+          totalPrice: userData.data.totalPrice,
+          quantity: userData.data.quantity
         });
-        const obj = (0, _order.default)(order).save(); // Create("Product", userData);
 
-        return userData;
+        if (!order) {
+          return next(new ErrorHandler("Order not found with this Id", 404));
+        }
+
+        const obj = await order.save();
+        console.log(obj); // Create("Product", userData);
       });
     } catch (error) {
       console.log("Error in Connecting RabbitMQ!", error);
