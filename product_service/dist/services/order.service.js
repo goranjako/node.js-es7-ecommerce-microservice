@@ -9,8 +9,6 @@ exports.default = void 0;
 
 var _amqplib = _interopRequireDefault(require("amqplib"));
 
-var _bodyParser = require("body-parser");
-
 let channel;
 
 class RabbitMQ {
@@ -27,9 +25,9 @@ class RabbitMQ {
     }
   }
 
-  async Create(kanal, data) {
+  async Create(chann, data) {
     try {
-      await channel.sendToQueue(kanal, Buffer.from(JSON.stringify({
+      await channel.sendToQueue(chann, Buffer.from(JSON.stringify({
         data
       })));
     } catch (error) {
@@ -37,13 +35,12 @@ class RabbitMQ {
     }
   }
 
-  async Consume(kanal) {
+  async Consume(chann, res) {
     try {
-      channel.consume(kanal, data => {
-        const userData = JSON.parse(Buffer.from(data.content));
+      channel.consume(chann, async data => {
+        const userData = await JSON.parse(Buffer.from(data.content));
         channel.ack(data);
-        console.log("Data konzum: ", userData);
-        return userData;
+        await res.status(201).json(userData);
       });
     } catch (error) {
       console.log("Error in Connecting RabbitMQ!", error);

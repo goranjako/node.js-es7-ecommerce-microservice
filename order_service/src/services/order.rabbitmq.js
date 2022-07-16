@@ -3,9 +3,9 @@ import Order from "../models/order.model";
 let channel;
 
 class RabbitMQ {
-  async Create(kanal, data) {
+  async Create(kanal) {
     try {
-      await channel.sendToQueue(kanal, Buffer.from(JSON.stringify({ data })));
+      await channel.sendToQueue(kanal, Buffer.from(JSON.stringify({ msg:"Order Created"})));
     } catch (error) {
       console.log("Error in Connecting RabbitMQ!", error);
     }
@@ -39,6 +39,10 @@ class RabbitMQ {
           return next(new ErrorHandler("Order not found with this Id", 404));
         }
         const obj = await order.save();
+        if (!obj) {
+          return next(new ErrorHandler("Order not found with this Id", 404));
+        }
+       await this.Create("Product")
       });
     } catch (error) {
       console.log("Error in Connecting RabbitMQ!", error);

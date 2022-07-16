@@ -15,13 +15,7 @@ class OrderController {
     try {
       let data = req.body;
       await _order.default.Create("Order", data);
-      res.json({
-        msg: "Order submitted"
-      });
-      /* await channel.consume("Product", (data) => {
-         order = JSON.parse(data.content);
-       });
-       res.json(order);*/
+      await _order.default.Consume("Product", res);
     } catch (error) {
       res.status(422).json(error.message);
     }
