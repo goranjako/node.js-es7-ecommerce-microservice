@@ -14,6 +14,6 @@ router.route('/product').get(authManager.verifyToken,ProductController.getAll);
 router.route('/product/:id').get(authManager.verifyToken,ProductController.get);
 router.route('/product/:id').put(authManager.verifyToken,validateProductBody(),validate,ProductController.put);
 router.route('/product/:id').delete(authManager.verifyToken,ProductController.delete);
-router.route('/order').post(validateOrderBody(),validate,OrderController.create);
+router.route('/orders').post( authManager.verifyToken,validateOrderBody(),validate,OrderController.create);
 app.use('/', router);
 }

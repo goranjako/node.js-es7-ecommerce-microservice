@@ -25,8 +25,7 @@ function setRoutes(app) {
   const router = _express.default.Router(); //productRoute
 
 
-  router.route('/product').post(validateProductBody(), validate, _product.default.create); //router.route('/product').post(authManager.verifyToken,validateProductBody(),validate,ProductController.create);
-
+  router.route('/product').post(_auth.default.verifyToken, validateProductBody(), validate, _product.default.create);
   router.route('/product').get(_auth.default.verifyToken, _product.default.getAll);
   router.route('/product/:id').get(_auth.default.verifyToken, _product.default.get);
   router.route('/product/:id').put(_auth.default.verifyToken, validateProductBody(), validate, _product.default.put);
